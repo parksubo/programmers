@@ -1,0 +1,19 @@
+def solution(n):
+    # 2진수로 변환했을대 1의 갯수 구하기
+    countN = 0
+    binN = format(n,'b')
+    for i in range(len(binN)):
+        if(binN[i] == "1"):
+            countN += 1
+    
+    while True:
+        n += 1
+        countT = 0
+        binT = format(n,'b')
+        for i in range(len(binT)):
+            if(binT[i] == "1"):
+                countT += 1
+        if (countT == countN):
+            return n
+
+    return -1

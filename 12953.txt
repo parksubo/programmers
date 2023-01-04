@@ -1,0 +1,7 @@
+def solution(arr):
+    # 최소공배수 = a * b / gcd(a, b)
+    l = arr[0]
+    for num in arr:
+        l = int((num * l) / gcd(num, l))
+        
+    return l

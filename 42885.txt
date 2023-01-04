@@ -1,0 +1,29 @@
+from collections import deque
+
+def solution(people, limit):
+    boat = 0
+    people.sort(reverse=True) # 내림차순 정렬
+    deq = deque(people)
+
+    # 데크가 빌 때까지
+    while deq:
+        # 큐에 둘 이상이 남아 있을 경우
+        if len(deq) > 1:
+            # 가장 무거운 사람과 가장 가벼운 사람의 합이 limit 보다 작을 때
+            if deq[0] + deq[-1] <= limit:
+                # 가장 무거운 사람의 무게에 가벼운 사람의 무게를 합치고
+                deq[0] = deq[0] + deq[-1]
+                # 가장 가벼운 사람 pop
+                deq.pop()
+            # 가장 무거운 사람이 가장 가벼운 사람과 못타면 혼자 타야함
+            else:
+                deq.popleft()
+                boat+=1
+        else:
+            deq.pop()
+            boat+=1
+
+    return boat
+     
+
+from math import gcd
