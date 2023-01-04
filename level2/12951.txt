@@ -1,0 +1,8 @@
+def solution(s):
+    arr = list(s.split(' '))
+    str = ""
+    for i in range(len(arr)):
+        str += arr[i].capitalize()
+        if i < len(arr) - 1:
+            str += " "    
+    return str

@@ -1,0 +1,25 @@
+def solution(s):
+    # 큰 괄호제거 및 길이를 맞추기 위한 "," 추가
+    s = s[1:]
+    s = s[:len(s)-1] + ","
+    # 괄호 갯수 = 튜플 길이
+    tupleLen = s.count("{")
+    # 임의 배열 선언하여 각 부분 집합 넣기
+    arr = ["0"] * tupleLen
+    for i in range(tupleLen):
+        # ex) arr = ['2', '2,1', '2,1,3', '2,1,3,4']
+        arr[i] = (s.split("{")[i+1])[:-2]    
+    # 길이 순으로 정렬
+    arr.sort(key=len)
+
+    answer = [int(arr[0])]
+   
+    # 해당 원소가 이미 있는지 확인 후 순서대로 넣음
+    for i in range(1, tupleLen):
+        for j in range(i+1):
+            temp2 = int(arr[i].split(",")[j])
+            if(temp2 not in answer):
+                answer.append(temp2)
+                break
+                    
+    return answer

@@ -1,0 +1,16 @@
+def solution(s):
+    l = 0
+    r = 0
+    # "("의 개수가 ")" 의 개수보다 항상 같거나 많아야함
+    for i in range(len(s)):
+        if(l >= r):       
+            if(s[i] == "("):
+                l += 1
+            else:
+                r += 1
+        else:
+            return False
+    # 괄호의 개수가 같지 않을 경우
+    if(l != r):
+        return False 
+    return True

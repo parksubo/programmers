@@ -1,0 +1,8 @@
+def solution(citations):
+    h_index = 0
+    citations.sort(reverse=True)
+    for i in range(0, len(citations)):
+        # i+1번이상 인용된 논문이 i+1개가 넘는다
+        if citations[i] >= i+1:
+            h_index = i+1
+    return h_index

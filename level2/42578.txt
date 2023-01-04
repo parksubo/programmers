@@ -1,0 +1,14 @@
+def solution(clothes):
+    kindOfClothDict = {}
+    for i in clothes:
+        # 현재 보고있는 옷 + 아무것도 고르지 않을 경우에 수 까지 합쳐서 초기값 2로 설정
+        if(i[1] not in kindOfClothDict):
+            kindOfClothDict[i[1]] = 2
+        else:
+            kindOfClothDict[i[1]] += 1
+    
+    answer = 1
+    for i in kindOfClothDict:
+        answer *= kindOfClothDict[i]
+    # 아무것도 고르지 않는 경우 빼기
+    return answer - 1

@@ -1,0 +1,24 @@
+def solution(brown, yellow):
+    # yellow + brown의 약수 구하기
+    area = brown + yellow
+    arr = []
+    for i in range(1, area + 1):
+        if(area % i == 0):
+            arr.append(i)
+ 
+    arr2 = []
+    n = len(arr)
+    for i in range(0, int(n/2)+1):
+        # 가로의 길이가 세로보다 크거나 같음 주의
+        w = arr[n-i-1]
+        h = arr[i]
+        # 3미만은 길이 될 수 없음
+        if(w < 3 or h < 3):
+            continue
+        
+        if((w - 2) * (h - 2) == yellow):
+            arr2.append(w)
+            arr2.append(h)
+            break
+                     
+    return arr2

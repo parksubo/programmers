@@ -1,0 +1,11 @@
+import math
+def solution(n, left, right):
+    # 1 ≤ n ≤ 10^7 => 시간초과 주의
+    # arr[i][j] = max(i, j) + 1
+    arr = []
+    while(left <= right):
+        i = math.floor(left / n)
+        j = left % n
+        left += 1
+        arr.append(max(i, j) + 1)
+    return arr
