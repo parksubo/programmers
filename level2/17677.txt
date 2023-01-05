@@ -1,0 +1,27 @@
+from collections import Counter
+def solution(str1, str2):
+    # 소문자로 변환
+    str1 = str1.lower()
+    str2 = str2.lower()
+    list1 = []
+    list2 = []
+    # 2쌍씩 나누기
+    for i in range(len(str1) - 1):
+        temp = str1[i] + str1[i+1]
+        if(temp.isalpha()):
+            list1.append(temp)
+    for i in range(len(str2) - 1):
+        temp = str2[i] + str2[i+1]
+        if(temp.isalpha()):
+            list2.append(temp)
+    # 중복 집합으로 만들기
+    counter1 = Counter(list1)
+    counter2 = Counter(list2)
+    # element로 카운터 숫자만큼 item 리턴 후 list화
+    intersection = list((counter1 & counter2).elements())
+    union = list((counter1 | counter2).elements())
+    if not union:
+        return 65536
+    else :
+        j = len(intersection) / len(union)
+        return int(j * 65536)
