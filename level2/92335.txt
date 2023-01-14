@@ -1,0 +1,30 @@
+import math
+def isPrime(num):
+    if num == 1:
+        return False
+    else:
+        for i in range(2, int(math.sqrt(num))+1):
+            if num % i == 0:
+                return False
+        return True
+    
+def solution(n, k):
+    temp_list = []
+    rest = 0
+    while n >= k:
+        rest = n % k
+        temp_list.append(rest)
+        n //= k
+    rest = n % k
+    temp_list.append(rest)
+    temp_list.reverse()
+    temp_str = ""
+    for i in temp_list:
+        temp_str += str(i)
+    count = 0
+    for i in temp_str.split("0"):
+        if not i:
+            continue
+        if isPrime(int(i)):
+            count += 1
+    return count

@@ -1,0 +1,28 @@
+def solution(dirs):
+    length = 0
+    coordinates = []
+    current_x = 0
+    current_y = 0
+    next_x = 0
+    next_y = 0
+    for i in dirs:
+        if i == "U":
+            next_y = current_y + 1
+        elif i == "D":
+            next_y = current_y - 1
+        elif i == "L":
+            next_x = current_x - 1     
+        elif i == "R":
+            next_x = current_x + 1   
+        if -5 <= next_x <= 5 and -5 <= next_y <= 5:
+            if (current_x, current_y, next_x, next_y) not in coordinates:
+                # !A -> B - > A의 경우도 고려
+                coordinates.append((current_x, current_y, next_x, next_y))
+                coordinates.append((next_x, next_y, current_x, current_y))
+                length += 1
+            current_x = next_x
+            current_y = next_y
+        else:
+            next_x = current_x
+            next_y = current_y              
+    return length

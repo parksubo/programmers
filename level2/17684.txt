@@ -1,0 +1,29 @@
+# 1. 현재입력 검사 (1글자부터 ~n) 
+# 2. 현재 인덱스 출력
+# 3. 다음글자와 합쳐서 사전추가
+from string import ascii_uppercase
+def solution(msg):
+    all_list = list(ascii_uppercase)
+    answer_list = []
+    # msg가 null일 때 까지
+    while msg:
+        # 현재 입력 정하기
+        current_input = ""
+        for i in range(len(msg)):
+            if (current_input + msg[i]) in all_list:
+                current_input += msg[i]
+                continue
+            else:
+                break
+        
+        # 현재 입력 인덱스 정답리스트에 추가
+        answer_list.append(all_list.index(current_input)+1)
+        # 마지막 입력이면 break
+        if len(msg) == len(current_input):
+            break
+        else: 
+            # 현재 입력 + 다음 입력 사전에 추가
+            all_list.append(current_input + msg[len(current_input)])        
+            msg = msg[len(current_input):]
+
+    return answer_list

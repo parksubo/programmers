@@ -1,0 +1,19 @@
+dict_list = []
+
+def dfs(x, words, depth):
+    global dict_list
+    if depth == len(words):
+        return
+    
+    for i in range(len(words)):
+        _x = x + words[i]
+        dict_list.append(_x)
+        dfs(_x, words, depth + 1)
+
+def solution(word):
+    global dict_list
+    dfs("", "AEIOU", 0)
+    # 사전식 정렬
+    dict_list.sort()
+    answer = dict_list.index(word)
+    return answer+1
