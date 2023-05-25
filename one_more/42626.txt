@@ -1,0 +1,29 @@
+- https://school.programmers.co.kr/learn/courses/30/lessons/42626
+- 키워드 : heap
+- 레벨 : 2 
+
+- heap은 우선순위큐의 한 종류로 완전 이진 트리(Complete Binary Tree)이며, 부모 노드의 값이 항상 자식 노드들의 값보다 크거나(Max Heap), 작아야(Min Heap) 한다. 힙은 우선순위 큐를 구현하거나, 힙 정렬을 하는 데 사용된다. 루트 노드에 있는 값이 최대값, 혹은 최소값이며, 자식 노드들의 값의 위치는 기본적인 조건만 맞추면 된다.
+- 파이썬에는 리스트 기반의 우선순위큐(PriorityQueue)와 힙큐(headq)를 모두 지원하지만 힙큐가 시간복잡도 상으로 더 좋으므로 힙큐(heapq) 만 알아두면 된다.
+
+- 시간복잡도 관련 : 
+데이터 개수가 N개일 때, 리스트 기반 우선순위 큐 구현 시 최악의 경우에 시간 복잡도는 O(N^2)입니다. 반면, 힙 자료구조를 사용하면 최악의 경우에도 시간 복잡도가 O(NlogN)입니다. 힙 자료구조의 경우, N개의 데이터를 삽입하고 우선순위에 맞게 데이터를 탐색하는 과정은 모두 O(logN) 의 연산을 N번 반복하므로 O(NlogN) 만큼의 시간이 소요됩니다. 따라서 전체 연산 횟수는 2NlogN이므로 전체 시간 복잡도는 빅오 표기법에 따라 O(NlogN)입니다. 이처럼 시간 복잡도 측면에서 데이터의 개수가 많아질수록 힙 자료구조를 활용하여 우선순위 큐를 구현했을 때가 리스트를 활용할 때보다 훨씬 효율적이라는 것을 알 수 있습니다.
+
+- Tips:
+h가 heap일 때, h[0]은 항상 최솟값이지만, h[-1]은 항상 최댓값이 아닐 수 있다.
+
+
+import heapq
+
+def solution(scoville, K):
+    count = 0
+    heapq.heapify(scoville)
+    while scoville[0] < K:
+        # 힙이의 길이가 1이하인 경우
+        # => 모든 음식의 스코빌 지수 K이상으로 만들 수 없음
+        if len(scoville) <= 1:
+            return -1  
+        first = heapq.heappop(scoville)
+        second = heapq.heappop(scoville)
+        heapq.heappush(scoville, (first + second * 2))
+        count += 1
+    return count

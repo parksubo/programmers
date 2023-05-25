@@ -1,0 +1,36 @@
+- https://school.programmers.co.kr/learn/courses/30/lessons/72411
+- 키워드 : dictionary, combinations, Counter, sort, join
+- 레벨 : 2
+
+- 여러가지 라이브러리 기능 사용하기 좋은 문제
+
+from itertools import combinations
+from collections import Counter
+
+def solution(orders, course):
+    answer = []
+    for i in course:
+        counters = Counter()
+        # course 개수별 Counter 세기
+        for order in orders:
+            # XW와 WX를 동일하게 하기 위해 str 사전순 정렬
+            order = ''.join(sorted(list(order)))
+            # combination 결과 join으로 묶고
+            result = map(''.join, combinations(order, i))
+            # 카운터 업데이트
+            counters.update(result)
+        
+        # course별 max 값가진 keys 찾기, 0이면 스킵
+        if not counters:
+            continue
+        max_value = max(counters.values())
+        # 최소 value값이 2이상이어야 함
+        if max_value < 2:
+            continue
+        max_keys = [key for key, value in counters.items() if value == max_value]
+        answer.extend(max_keys)
+    
+    # 사전순 정렬
+    answer.sort()
+    
+    return answer

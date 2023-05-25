@@ -1,0 +1,33 @@
+- https://school.programmers.co.kr/learn/courses/30/lessons/154539
+- 키워드 : stack
+- 레벨 : 2 
+
+- heapq 풀이
+
+import heapq
+def solution(numbers):
+    answer = [-1 for _ in range(len(numbers))]
+    h = []
+    for idx, value in enumerate(numbers):
+        while h and h[0][0] < value:
+            _, _idx = heapq.heappop(h)
+            answer[_idx] = value
+            
+        heapq.heappush(h, [value, idx])
+        
+    return answer
+
+
+- stack 풀이
+
+def solution(numbers):
+    answer = [-1 for _ in range(len(numbers))]
+    stack = []
+    for i in range(len(numbers)):
+        # 스택이 비어있지 않고, 스택에 마지막으로 들어온 인덱스에 해당하는 numbers의 값보다 현재 numbers의 값이 크다면 뒷 큰 수이므로
+        while stack and numbers[stack[-1]] < numbers[i]:
+            # answer의 해당 인덱스의 자리에 numbers[i] (뒷 큰 수 삽입)
+            answer[stack.pop()] = numbers[i]      
+        stack.append(i)
+        
+    return answer

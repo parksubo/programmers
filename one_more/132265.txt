@@ -1,0 +1,23 @@
+- https://school.programmers.co.kr/learn/courses/30/lessons/132265
+- 키워드 : Counter, defaultdict
+- 레벨 : 2
+
+- 처음이 set과 slice로 풀 수 있을 것 같았지만 시간초과였다.
+- defaultdict은 dict의 서브클래스로 dict은 연산시 key가 존재하지 않으면 에러가 나지만 defaultdict은 key가 존재하지 않을시 자동으로 추가해주는 장점이 있다.
+
+from collections import Counter, defaultdict
+
+def solution(topping):
+    answer = 0
+    me = Counter(topping)
+    bro = defaultdict(int)
+    
+    for t in topping:
+        bro[t] += 1
+        me[t] -= 1
+        if me[t] == 0:
+            del me[t]
+        if len(bro) == len(me):
+            answer += 1
+    
+    return answer
