@@ -1,0 +1,52 @@
+- https://school.programmers.co.kr/learn/courses/30/lessons/43165#
+- 키워드 : dfs, bfs
+- 레벨 : 2
+
+간단하지만 여러 풀이가 있음
+
+from itertools import product
+def solution(numbers, target):
+    # numbers가 [a1, b1, c1] 이면 [(a1, -a1), (b1, -b1), (c1, -c1)] 형태로 변환
+    l = [(x, -x) for x in numbers]
+    # product(*l)을 하면 각 요소들의 모든 경우에 수 생성 ex) (a1, b1, c1), (-a1, b1, c1), (a1, -b1, c1) ... 등 총 8개 생성
+    s = list(map(sum, product(*l)))
+    return s.count(target)
+count = 0
+def dfs(numbers, target, cnt):
+    global count
+    if cnt == len(numbers):
+        if sum(numbers) == target:
+            count += 1
+            return
+    else: 
+        dfs(numbers, target, cnt+1)
+        numbers[cnt] *= -1
+        dfs(numbers, target, cnt+1)
+        return
+    
+
+def solution(numbers, target):
+    global count
+    dfs(numbers, target, 0)
+    return count
+count = 0
+def dfs(numbers, cur, target):
+    global count
+    if not numbers:
+        if cur == target:
+            count += 1
+            return
+        else:
+            return
+    
+    x = numbers[0]
+    dfs(numbers[1:], cur + x, target)
+    dfs(numbers[1:], cur - x, target)
+
+    return
+    
+def solution(numbers, target):
+    global count
+    dfs(numbers, 0, target)
+
+    return count

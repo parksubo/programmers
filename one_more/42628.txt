@@ -1,0 +1,46 @@
+- https://school.programmers.co.kr/learn/courses/30/lessons/42628
+- 키워드 : heap, 구현
+- 레벨 : 3
+
+파이썬에서 제공하는 heapq은 최소힙으로 최대힙은 제공하지 않는다. 최대힙처럼 사용하기 위해서는 만들기 위해서는 -1을 곱하고 heapify를 한 후 heapq.heappop()을 하면 최대힙의 pop과 같은 효과를 얻을 수 있다.
+아래 문제에서는 최대힙의 pop 기능만 가능하면 되므로 총 3가지 방법으로 풀 수 있다.
+1. 위에 설명한 방법
+2. heap을 역순으로 sort후 첫번째 원소만 버리고 슬라이스, 이후 heapq.heapify
+3. heapq.nlargest(n, list)를 사용하여 list에서 큰 순서대로 n개 뽑은 후 슬라이스, 이후 heapq.heapify
+1보단 2,3이 빠르고 2는 nlogk (k는 nlargest에서 몇개를 뽑을 건지), 3은 nlog의 시간복잡도를 가지지만
+여기서는 어차피 k = n이므로 시간복잡도는 거의 같다고 볼 수 있다.
+
+import heapq
+from collections import deque
+
+def solution(operations):
+    dq = deque(operations)
+    # 파이썬은 최소힙만 지원, 최대힙은 -1 곱한다음 정렬후 다시 -1 곱해서 만들기
+    heap = []
+    
+    while dq:
+        x = dq.popleft()
+        op1 = x.split(" ")[0]
+        op2 = x.split(" ")[1]
+        if op1 == "I":
+            heapq.heappush(heap, int(op2))
+        elif op1 == "D" and heap:
+            # 최솟값 삭제
+            if op2 == "-1":
+                heapq.heappop(heap)
+            # 최댓값 삭제
+            else:
+                # heap = sorted(heap, reverse = True)[1:]
+                # heapq.nlargest(n, list)는 list에서 큰 순서로 n개를 뽑아낸다 (ma)
+                heap = heapq.nlargest(len(heap), heap)[1:]
+                heapq.heapify(heap)
+                # heap = list(map(lambda x: -x, heap))
+                # heapq.heapify(heap)
+                # heapq.heappop(heap)
+                # heap = list(map(lambda x: -x, heap))
+                # heapq.heapify(heap)
+        print(heap)
+    if not heap:
+        return [0, 0]
+    else:   
+        return [max(heap), min(heap)]

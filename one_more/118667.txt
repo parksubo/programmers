@@ -1,0 +1,43 @@
+- https://school.programmers.co.kr/learn/courses/30/lessons/118667
+- 키워드 : queue, deque, two_pointer
+- 레벨 : 2 
+
+queue가 나오는 문제는 웬만하면 deque를 사용하도록 하자!
+deque.popleft()는 O(1)로 작동하고 list.pop(0)은 O(n)로 작동하기 때문이다.
+아래 코드처럼 포인터로 작동해도 풀리긴 하지만 deque를 사용해보고 안되면 포인터로 바꾸자
+그리고 반복문 탈출 조건을 잘 살펴보자!
+ 
+(풀다보니 deque 필요없을 듯)
+ 
+def solution(queue1, queue2):
+    count = 0
+    q = queue1 + queue2
+    if sum(q) % 2 != 0:
+        return -1
+    if max(q) > int(sum(q) / 2):
+        return -1
+    
+    # q1: [a:b], q2:[b:] + [0:a]
+    max_idx = len(q)
+    q1_idx = 0
+    q2_idx = len(queue2)
+    q1_sum = sum(queue1)
+    q2_sum = sum(queue2)
+    
+    while q1_sum != q2_sum:
+        if q2_idx >= max_idx:
+            q2_idx = 0
+        if q1_idx >= max_idx:
+            return -1
+        
+        if q1_sum > q2_sum:
+            q1_sum -= q[q1_idx]
+            q2_sum += q[q1_idx]
+            q1_idx += 1
+        else:
+            q2_sum -= q[q2_idx]
+            q1_sum += q[q2_idx]
+            q2_idx += 1
+        count += 1
+        
+    return count
