@@ -1,0 +1,62 @@
+- https://school.programmers.co.kr/learn/courses/30/lessons/43163
+- 키워드 : bfs, dfs
+- 레벨 : 3
+
+기초 bfs, dfs
+전역변수 없이 풀어보기, 만약 visited가 일차원 배열이라면 set()을 사용하면 O(n) -> O(1)로 줄이기 가능\
+
+풀이1
+
+answer = 51
+def dfs(begin, target, words, visited, count):
+    global answer
+    if begin == target:
+        answer = min(answer, count)
+        return
+    
+    for idx, word in enumerate(words):
+        if visited[idx]:
+            continue
+        same_count = 0
+        for i in range(len(word)):
+            if begin[i] == word[i]:
+                same_count += 1
+        # 하나만 다르고 나머지 같다면
+        if same_count == (len(word) - 1):
+            visited[idx] = True
+            dfs(word, target, words, visited, count + 1)
+            visited[idx] = False
+            
+def solution(begin, target, words):
+    global answer
+    visited = [False for _ in range(len(words))]
+    dfs(begin, target, words, visited, 0)
+    if answer == 51:
+        return 0
+    return answer
+ 풀이2
+
+def dfs(begin, target, words, visited, count):
+    if begin == target:
+        return count
+
+    min_count = float('inf')
+    for i in range(len(words)):
+        temp = 0
+        if visited[i]:
+            continue
+        for j in range(len(words[i])):
+            if begin[j] == words[i][j]:
+                temp += 1
+        if temp == (len(words[i]) - 1):
+            visited[i] = True
+            cur_count = dfs(words[i], target, words, visited, count + 1)
+            min_count = min(min_count, cur_count)
+            visited[i] = False
+
+    return min_count
+
+def solution(begin, target, words):
+    visited = set()
+    count = dfs(begin, target, words, visited, 0)
+    return count if count != float('inf') else 0

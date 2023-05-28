@@ -1,0 +1,36 @@
+- https://school.programmers.co.kr/learn/courses/30/lessons/43162#
+- 키워드 : union-find
+- 레벨 : 3
+
+bfs, dfs 문제인데 union-find가 더 간단함
+
+마지막에 한번더 find를 하지 않으면 안되는 함정이 숨어 있음
+
+ 
+
+def findParent(arr, x):
+    if(arr[x] == x):
+        return x
+    return findParent(arr, arr[x])
+
+def unionParent(arr, a, b):
+    a = findParent(arr, a)
+    b = findParent(arr, b)
+    if(a < b):
+        arr[b] = a
+    else:
+        arr[a] = b
+
+def solution(n, computers):
+    arr = [i for i in range(n)]
+    
+    for i in range(n):
+        for j in range(n):
+            if i != j and computers[i][j] == 1:
+                unionParent(arr, i, j)
+    
+    # [0,0,1,1,1,1,0]일 경우 모든 노드의 parent가 0을 가리키고 있으므로 한 번더 정리
+    for i in range(len(arr)):
+        arr[i] = arr[arr[i]]
+
+    return len(set(arr))
