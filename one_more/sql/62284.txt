@@ -1,0 +1,9 @@
+- https://school.programmers.co.kr/learn/courses/30/lessons/62284
+- 레벨 : 4
+
+서브쿼리 두 개로도 풀 수 있지만, 아래 풀이가 더 빠름
+
+SELECT DISTINCT(cart_id) FROM cart_products
+    WHERE cart_id IN 
+        (SELECT cart_id FROM cart_products WHERE name = 'Milk')
+    AND name = 'Yogurt'

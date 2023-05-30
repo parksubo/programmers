@@ -1,0 +1,27 @@
+- https://school.programmers.co.kr/learn/courses/30/lessons/131124
+- 레벨 : 4
+
+여러가지 고려사항이 많음
+
+WITH c_table AS(
+    SELECT member_id, COUNT(member_id) as cnt
+        FROM rest_review
+        GROUP BY member_id
+)
+
+SELECT A.member_name, B.review_text, B.review_date
+    FROM member_profile AS A
+    INNER JOIN (
+        SELECT member_id, review_text, DATE_FORMAT(review_date, "%Y-%m-%d") as review_date
+            FROM rest_review
+            WHERE (member_id) IN (
+                SELECT member_id
+                    FROM c_table
+                    WHERE cnt = (
+                        SELECT MAX(cnt) as max_count
+                            FROM c_table
+                    )
+            )
+    ) AS B
+    ON A.member_id = B.member_id
+    ORDER BY 3 ASC, 2 ASC
